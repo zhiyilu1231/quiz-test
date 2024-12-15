@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>諮商員特質評估表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input[type="radio"] {
+            transform: scale(1.2);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .result.high {
+            color: green;
+        }
+        .result.medium {
+            color: orange;
+        }
+        .result.low {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>諮商員特質評估表</h1>
+    <p>請根據每個特質，選擇「低」、「中」或「高」以評估自己或他人。選擇完成後，按下「計算分數」。</p>
+    <table>
+        <thead>
+            <tr>
+                <th>大分類</th>
+                <th>特質</th>
+                <th>低</th>
+                <th>中</th>
+                <th>高</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 外在能力分類 -->
+            <tr>
+                <td rowspan="3">外在能力</td>
+                <td>溝通能力</td>
+                <td><input type="radio" name="communication" value="1"></td>
+                <td><input type="radio" name="communication" value="2"></td>
+                <td><input type="radio" name="communication" value="3"></td>
+            </tr>
+            <tr>
+                <td>諮商技術</td>
+                <td><input type="radio" name="counseling_technique" value="1"></td>
+                <td><input type="radio" name="counseling_technique" value="2"></td>
+                <td><input type="radio" name="counseling_technique" value="3"></td>
+            </tr>
+            <tr>
+                <td>問題解決能力</td>
+                <td><input type="radio" name="problem_solving" value="1"></td>
+                <td><input type="radio" name="problem_solving" value="2"></td>
+                <td><input type="radio" name="problem_solving" value="3"></td>
+            </tr>
+
+            <!-- 內在特質分類 -->
+            <tr>
+                <td rowspan="4">內在特質</td>
+                <td>耐心</td>
+                <td><input type="radio" name="patience" value="1"></td>
+                <td><input type="radio" name="patience" value="2"></td>
+                <td><input type="radio" name="patience" value="3"></td>
+            </tr>
+            <tr>
+                <td>情緒管理</td>
+                <td><input type="radio" name="emotional_management" value="1"></td>
+                <td><input type="radio" name="emotional_management" value="2"></td>
+                <td><input type="radio" name="emotional_management" value="3"></td>
+            </tr>
+            <tr>
+                <td>接納與包容</td>
+                <td><input type="radio" name="acceptance" value="1"></td>
+                <td><input type="radio" name="acceptance" value="2"></td>
+                <td><input type="radio" name="acceptance" value="3"></td>
+            </tr>
+            <tr>
+                <td>勇氣與自信</td>
+                <td><input type="radio" name="courage_confidence" value="1"></td>
+                <td><input type="radio" name="courage_confidence" value="2"></td>
+                <td><input type="radio" name="courage_confidence" value="3"></td>
+            </tr>
+
+            <!-- 自我反思分類 -->
+            <tr>
+                <td rowspan="3">自我反思</td>
+                <td>助人讓你感覺到被療癒和快樂嗎？</td>
+                <td><input type="radio" name="helping_joy" value="1"></td>
+                <td><input type="radio" name="helping_joy" value="2"></td>
+                <td><input type="radio" name="helping_joy" value="3"></td>
+            </tr>
+            <tr>
+                <td>在諮商過程中，你是否也能從中獲得成長？</td>
+                <td><input type="radio" name="counseling_growth" value="1"></td>
+                <td><input type="radio" name="counseling_growth" value="2"></td>
+                <td><input type="radio" name="counseling_growth" value="3"></td>
+            </tr>
+            <tr>
+                <td>你能夠放下對他人的期望，並接納他們的真實模樣嗎？</td>
+                <td><input type="radio" name="let_go_expectations" value="1"></td>
+                <td><input type="radio" name="let_go_expectations" value="2"></td>
+                <td><input type="radio" name="let_go_expectations" value="3"></td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="calculateScores()">計算分數</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateScores() {
+            let totalScore = 0;
+            const radios = document.querySelectorAll('input[type="radio"]:checked');
+            radios.forEach(radio => {
+                totalScore += parseInt(radio.value);
+            });
+
+            const resultDiv = document.getElementById("result");
+            let resultMessage = "";
+
+            if (totalScore >= 24) {
+                resultMessage = "恭喜！你的諮商特質非常濃厚，適合成為專業諮商員！";
+                resultDiv.className = "result high";
+            } else if (totalScore >= 17) {
+                resultMessage = "你的諮商特質中等，有潛力透過學習和實踐進一步提升！";
+                resultDiv.className = "result medium";
+            } else {
+                resultMessage = "目前你的諮商特質較低，可以多參與相關訓練與活動來增強！";
+                resultDiv.className = "result low";
+            }
+
+            resultDiv.textContent = `總分: ${totalScore} 分 - ${resultMessage}`;
+        }
+    </script>
+</body>
+</html>
